@@ -1,4 +1,5 @@
 use std::{fs::File, io::Read};
+#[allow(unused_must_use)]
 pub fn readfile(file: String) {
     let mut f = File::open(file).expect("file");
     let mut s = String::new();
