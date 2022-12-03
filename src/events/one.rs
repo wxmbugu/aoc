@@ -7,7 +7,8 @@ pub fn largest_amount(file: String) -> i32 {
     let stars: Vec<&str> = s.split("\n\n").collect();
     let mut largest = 0;
     for star in stars {
-        let dataset: Vec<i32> = star.split('\n')
+        let dataset: Vec<i32> = star
+            .split('\n')
             .filter(|x| !x.is_empty())
             .map(|x| x.parse().unwrap())
             .collect();
@@ -16,6 +17,5 @@ pub fn largest_amount(file: String) -> i32 {
             largest = ok;
         }
     }
-    //println!("largest = {}", largest)
-    largest
+        largest
 }
