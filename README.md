@@ -1,5 +1,5 @@
 # Advent of Code 2022
- - My Solutions of Advent to Code 
+ - My Solutions to Advent of Code 
  - Solutions are located at src/events/
 
 
