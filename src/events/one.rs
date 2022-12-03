@@ -1,17 +1,13 @@
 use std::{fs::File, io::Read};
 #[allow(unused_must_use)]
-pub fn readfile(file: String) {
+pub fn largest_amount(file: String) -> i32 {
     let mut f = File::open(file).expect("file");
     let mut s = String::new();
     f.read_to_string(&mut s);
-    let newstr = s.replace("\n\n", "\ngroup\n");
-    let binding = newstr.replace('\n', ",");
-    let stars: Vec<&str> = binding.split(",group,").collect();
+    let stars: Vec<&str> = s.split("\n\n").collect();
     let mut largest = 0;
     for star in stars {
-        let dataset: Vec<i32> = star
-            .trim()
-            .split(',')
+        let dataset: Vec<i32> = star.split('\n')
             .filter(|x| !x.is_empty())
             .map(|x| x.parse().unwrap())
             .collect();
@@ -20,5 +16,6 @@ pub fn readfile(file: String) {
             largest = ok;
         }
     }
-    println!("largest = {}", largest)
+    //println!("largest = {}", largest)
+    largest
 }

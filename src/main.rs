@@ -1,4 +1,5 @@
-use aoc::one::readfile;
+use aoc::one::largest_amount;
 fn main() {
-    readfile("src/input/d_1/input.txt".to_string());
+    let amount = largest_amount("src/input/d_1/input.txt".to_string());
+    println!("Day one A.O.C, largest = {}", amount)
 }
