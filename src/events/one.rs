@@ -17,5 +17,5 @@ pub fn largest_amount(file: String) -> i32 {
             largest = ok;
         }
     }
-        largest
+    largest
 }
