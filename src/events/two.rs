@@ -19,10 +19,8 @@ pub fn rock_paper_scissors(file: String) -> i32 {
         let dataset: Vec<&str> = game_play.split('\n').collect();
         for score in dataset {
             let data: Vec<&str> = score.split(',').collect();
-            let opponent = match_opponent(data[0].to_string());
-            let player = match_player(data[1].to_string());
-            let opponent = opponent.unwrap();
-            let player = player.unwrap();
+            let opponent = match_opponent(data[0].to_string()).unwrap();
+            let player = match_player(data[1].to_string()).unwrap();
             let x = total_score(opponent.to_string(), player.to_string());
             sum += x
         }
@@ -97,9 +95,9 @@ impl GamePlay {
 
     fn score_gameplay(self) -> i32 {
         match self {
-            GamePlay::Rock => 1,
-            GamePlay::Paper => 2,
-            GamePlay::Scissors => 3,
+            Self::Rock => 1,
+            Self::Paper => 2,
+            Self::Scissors => 3,
         }
     }
 }
