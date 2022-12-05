@@ -1,6 +1,6 @@
 use std::fmt::Display;
 use std::{fs::File, io::Read, str::FromStr};
-#[derive(Debug, PartialEq, Eq, PartialOrd)]
+#[derive(Debug)]
 enum GamePlay {
     Rock,
     Paper,
@@ -19,8 +19,8 @@ pub fn rock_paper_scissors(file: String) -> i32 {
         let dataset: Vec<&str> = game_play.split('\n').collect();
         for score in dataset {
             let data: Vec<&str> = score.split(',').collect();
-            let opponent = match_opponent(data[0].to_string()).unwrap();
-            let player = match_player(data[1].to_string()).unwrap();
+            let opponent = match_hand(data[0].to_string()).unwrap();
+            let player = match_hand(data[1].to_string()).unwrap();
             let x = total_score(opponent.to_string(), player.to_string());
             sum += x
         }
@@ -28,20 +28,11 @@ pub fn rock_paper_scissors(file: String) -> i32 {
     sum
 }
 
-fn match_opponent(data: String) -> Option<GamePlay> {
+fn match_hand(data: String) -> Option<GamePlay> {
     match data.as_ref() {
-        "A" => Some(GamePlay::Rock),
-        "B" => Some(GamePlay::Paper),
-        "C" => Some(GamePlay::Scissors),
-        _ => None,
-    }
-}
-
-fn match_player(data: String) -> Option<GamePlay> {
-    match data.as_ref() {
-        "X" => Some(GamePlay::Rock),
-        "Y" => Some(GamePlay::Paper),
-        "Z" => Some(GamePlay::Scissors),
+        "A" | "X" => Some(GamePlay::Rock),
+        "B" | "Y" => Some(GamePlay::Paper),
+        "C" | "Z" => Some(GamePlay::Scissors),
         _ => None,
     }
 }
