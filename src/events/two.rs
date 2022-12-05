@@ -62,13 +62,9 @@ impl FromStr for GamePlay {
 fn play_hand(own_hand: GamePlay, other_hand: GamePlay) -> (GamePlay, GameState) {
     match (&own_hand, &other_hand) {
         // winning play
-        _ if own_hand.beats().to_string() == other_hand.to_string() => {
-            (own_hand, GameState::Win)
-        }
+        _ if own_hand.beats().to_string() == other_hand.to_string() => (own_hand, GameState::Win),
         // draw play
-        _ if other_hand.to_string() == own_hand.to_string() => {
-            (own_hand, GameState::Lose)
-        }
+        _ if other_hand.to_string() == own_hand.to_string() => (own_hand, GameState::Draw),
         // loosing play
         _ => (own_hand, GameState::Lose),
     }
