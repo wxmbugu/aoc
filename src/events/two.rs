@@ -6,7 +6,11 @@ enum GamePlay {
     Paper,
     Scissors,
 }
-
+enum GameState {
+    Win,
+    Lose,
+    Draw,
+}
 #[allow(unused_must_use)]
 pub fn rock_paper_scissors(file: String) -> i32 {
     let mut f = File::open(file).expect("file");
@@ -55,24 +59,27 @@ impl FromStr for GamePlay {
     }
 }
 
-fn play_hand(own_hand: GamePlay, other_hand: GamePlay) -> i32 {
+fn play_hand(own_hand: GamePlay, other_hand: GamePlay) -> (GamePlay, GameState) {
     match (&own_hand, &other_hand) {
         // winning play
         _ if own_hand.beats().to_string() == other_hand.to_string() => {
-            own_hand.score_gameplay() + 6
+            (own_hand, GameState::Win)
         }
         // draw play
-        _ if other_hand.to_string() == own_hand.to_string() => own_hand.score_gameplay() + 3,
+        _ if other_hand.to_string() == own_hand.to_string() => {
+            (own_hand, GameState::Lose)
+        }
         // loosing play
-        _ => own_hand.score_gameplay(),
+        _ => (own_hand, GameState::Lose),
     }
 }
 
 fn total_score(opponent: String, player: String) -> i32 {
-    play_hand(
+    let (game_play, game_state) = play_hand(
         GamePlay::from_str(player.as_ref()).unwrap(),
         GamePlay::from_str(opponent.as_ref()).unwrap(),
-    )
+    );
+    game_state.compute(game_play)
 }
 
 impl GamePlay {
@@ -89,6 +96,16 @@ impl GamePlay {
             Self::Rock => 1,
             Self::Paper => 2,
             Self::Scissors => 3,
+        }
+    }
+}
+
+impl GameState {
+    fn compute(self, own_hand: GamePlay) -> i32 {
+        match self {
+            Self::Win => own_hand.score_gameplay() + 6,
+            Self::Draw => own_hand.score_gameplay() + 3,
+            Self::Lose => own_hand.score_gameplay(),
         }
     }
 }
