@@ -1,5 +1,5 @@
-use std::fmt::Display;
-use std::{fs::File, io::Read, str::FromStr};
+use std::fmt::{Debug, Display};
+use std::str::FromStr;
 #[derive(Debug)]
 enum GamePlay {
     Rock,
@@ -11,23 +11,15 @@ enum GameState {
     Lose,
     Draw,
 }
-#[allow(unused_must_use)]
-pub fn rock_paper_scissors(file: String) -> i32 {
-    let mut f = File::open(file).expect("file");
-    let mut s = String::new();
-    f.read_to_string(&mut s);
-    let newstring = s.replace(' ', ",");
-    let data: Vec<&str> = newstring.split('\n').filter(|x| !x.is_empty()).collect();
+pub fn rock_paper_scissors(data: &str) -> i32 {
+    let data: Vec<&str> = data.split('\n').filter(|x| !x.is_empty()).collect();
     let mut sum = 0;
     for game_play in data {
-        let dataset: Vec<&str> = game_play.split('\n').collect();
-        for score in dataset {
-            let data: Vec<&str> = score.split(',').collect();
-            let opponent = match_hand(data[0].to_string()).unwrap();
-            let player = match_hand(data[1].to_string()).unwrap();
-            let x = total_score(opponent.to_string(), player.to_string());
-            sum += x
-        }
+        let data: Vec<&str> = game_play.split(' ').collect();
+        let opponent = match_hand(data[0].to_string()).unwrap();
+        let player = match_hand(data[1].to_string()).unwrap();
+        let x = total_score(opponent.to_string(), player.to_string());
+        sum += x
     }
     sum
 }
@@ -37,7 +29,7 @@ fn match_hand(data: String) -> Option<GamePlay> {
         "A" | "X" => Some(GamePlay::Rock),
         "B" | "Y" => Some(GamePlay::Paper),
         "C" | "Z" => Some(GamePlay::Scissors),
-        _ => None,
+        _ => panic!("No such input"),
     }
 }
 
