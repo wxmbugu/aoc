@@ -5,6 +5,8 @@ pub fn largest_amount(data: &str) -> u32 {
         .collect();
 
     stars.sort_unstable_by(|a, b| b.cmp(a));
+    // let sum: Option<&u32> = stars.iter().take(1).last();
+    // sum.unwrap().to_owned()
     let sum: u32 = stars.iter().take(1).sum();
     sum
 }
